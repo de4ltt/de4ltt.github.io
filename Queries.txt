@@ -1,0 +1,32 @@
+[1 задание]
+GET / HTTP/1.0
+Host: kubsu-dev.ru
+
+[2 задание]
+GET / HTTP/1.1
+Host: u58694.kubsu-dev.ru
+
+[3 задание]
+HEAD /file.tar.gz HTTP/2.0
+Host: u58694.kubsu-dev.ru
+
+[4 задание]
+HEAD /image.png HTTP/1.1
+Host: u58694.kubsu-dev.ru
+
+[5 задание]
+POST /index.php HTTP/1.1
+Host: u58694.kubsu-dev.ru
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 18
+
+comment=HelloWorld
+
+[6 задание]
+GET /file.tar.gz HTTP/1.0
+Host: u58694.kubsu-dev.ru
+Range: bytes=0-99
+
+[7 задание]
+HEAD /index.php HTTP/2.0
+Host: u58694.kubsu-dev.ru
