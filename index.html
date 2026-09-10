@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Алексей Тимко — Android-разработчик</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d1117;
+      --card-bg: #161b22;
+      --card-border: #30363d;
+      --text-main: #e6edf3;
+      --text-muted: #8b949e;
+      --accent: #388bfd;
+      --accent-hover: #58a6ff;
+      --accent-soft: rgba(56, 139, 253, 0.12);
+      --badge-bg: #21262d;
+      --badge-border: #363b42;
+      --badge-text: #c9d1d9;
+      --tag-special: #7ee787;
+      --tag-special-bg: rgba(46, 160, 67, 0.15);
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f6f8fa;
+        --card-bg: #ffffff;
+        --card-border: #d0d7de;
+        --text-main: #1f2328;
+        --text-muted: #656d76;
+        --accent: #0969da;
+        --accent-hover: #0550ae;
+        --accent-soft: rgba(9, 105, 218, 0.08);
+        --badge-bg: #f3f4f6;
+        --badge-border: #d0d7de;
+        --badge-text: #24292f;
+        --tag-special: #1a7f37;
+        --tag-special-bg: rgba(26, 127, 55, 0.1);
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.55;
+      font-size: 14px;
+      padding: 32px 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 36px 40px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Actions Bar */
+    .actions-bar {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      font-family: var(--font-sans);
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+
+    .btn-primary {
+      background-color: var(--accent);
+      color: #ffffff;
+      border: 1px solid var(--accent);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--accent-hover);
+    }
+
+    .btn-secondary {
+      background-color: var(--badge-bg);
+      color: var(--text-main);
+      border: 1px solid var(--badge-border);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--card-border);
+    }
+
+    /* Header */
+    header {
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 22px;
+      margin-bottom: 22px;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .role-subtitle {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: var(--tag-special-bg);
+      color: var(--tag-special);
+      font-weight: 600;
+      border: 1px solid var(--tag-special);
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      background-color: currentColor;
+      border-radius: 50%;
+    }
+
+    .contacts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 8px 16px;
+      margin-top: 14px;
+      font-size: 13.5px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+    }
+
+    .contact-item a {
+      color: var(--text-main);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .contact-item a:hover {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+
+    /* Sections */
+    section {
+      margin-bottom: 22px;
+    }
+
+    h2 {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 700;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 6px;
+      margin-bottom: 14px;
+    }
+
+    .summary-text {
+      color: var(--text-main);
+      font-size: 13.5px;
+      line-height: 1.6;
+    }
+
+    /* Skills Grid */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 8px 16px;
+      font-size: 13px;
+    }
+
+    .skill-category {
+      font-weight: 600;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      padding-top: 2px;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      background-color: var(--badge-bg);
+      border: 1px solid var(--badge-border);
+      color: var(--badge-text);
+      border-radius: 4px;
+      font-size: 11.5px;
+      font-family: var(--font-mono);
+    }
+
+    .badge.highlight {
+      background-color: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* Experience / Projects */
+    .project-card {
+      margin-bottom: 18px;
+      padding-bottom: 16px;
+      border-bottom: 1px dashed var(--card-border);
+    }
+
+    .project-card:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .project-title {
+      font-size: 15.5px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .project-title a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .project-title a:hover {
+      text-decoration: underline;
+    }
+
+    .project-period {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    .project-role {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .project-desc {
+      font-size: 13px;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .project-bullets {
+      list-style-type: none;
+      margin-bottom: 8px;
+    }
+
+    .project-bullets li {
+      position: relative;
+      padding-left: 18px;
+      margin-bottom: 4px;
+      font-size: 13px;
+      color: var(--text-main);
+      line-height: 1.5;
+    }
+
+    .project-bullets li::before {
+      content: "▹";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .project-bullets li strong {
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .project-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 6px;
+    }
+
+    /* Education */
+    .edu-item {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .edu-degree {
+      font-weight: 600;
+      color: var(--text-main);
+      font-size: 13.5px;
+    }
+
+    .edu-institution {
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    .edu-period {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* Print Styles */
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        padding: 0 !important;
+        font-size: 10.5pt !important;
+        line-height: 1.35 !important;
+      }
+
+      .container {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        max-width: 100% !important;
+      }
+
+      .actions-bar {
+        display: none !important;
+      }
+
+      a {
+        color: #000000 !important;
+        text-decoration: none !important;
+      }
+
+      .badge {
+        border: 1px solid #ddd !important;
+        color: #222 !important;
+        background: #f8f8f8 !important;
+        font-size: 8.5pt !important;
+        padding: 1px 4px !important;
+      }
+
+      .badge.highlight {
+        border-color: #555 !important;
+        color: #000 !important;
+        font-weight: 600 !important;
+      }
+
+      .project-card {
+        break-inside: avoid;
+        border-bottom: 1px solid #eee !important;
+        margin-bottom: 10px !important;
+        padding-bottom: 8px !important;
+      }
+
+      h1 {
+        font-size: 18pt !important;
+      }
+
+      .role-subtitle {
+        font-size: 12pt !important;
+        color: #222 !important;
+      }
+
+      h2 {
+        font-size: 10pt !important;
+        color: #333 !important;
+        margin-bottom: 6px !important;
+        padding-bottom: 2px !important;
+      }
+
+      .status-badge {
+        display: none !important;
+      }
+    }
+
+    @media (max-width: 650px) {
+      .container {
+        padding: 20px 16px;
+      }
+      .skills-grid {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+      .skill-category {
+        margin-top: 4px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Top Action Buttons -->
+    <div class="actions-bar">
+      <button class="btn btn-secondary" onclick="window.print()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>
+        Распечатать / Сохранить в PDF
+      </button>
+      <a class="btn btn-primary" href="https://github.com/de4ltt" target="_blank" rel="noopener">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub Profile
+      </a>
+    </div>
+
+    <!-- Header -->
+    <header>
+      <div class="header-top">
+        <div>
+          <h1>Тимко Алексей Евгеньевич</h1>
+          <div class="role-subtitle">Android-разработчик (Kotlin)</div>
+        </div>
+        <div class="status-badge">
+          <span class="status-dot"></span>
+          Открыт к предложениям
+        </div>
+      </div>
+
+      <div class="contacts-grid">
+        <div class="contact-item">
+          📍 Краснодар · Удаленная работа / Релокация
+        </div>
+        <div class="contact-item">
+          ✉️ <a href="mailto:a.timko.dev@gmail.com">a.timko.dev@gmail.com</a>
+        </div>
+        <div class="contact-item">
+          💬 Telegram: <a href="https://t.me/de4ltt" target="_blank">@de4ltt</a>
+        </div>
+        <div class="contact-item">
+          🐙 GitHub: <a href="https://github.com/de4ltt" target="_blank">github.com/de4ltt</a>
+        </div>
+        <div class="contact-item">
+          📞 <a href="tel:+79898541396">+7 (989) 854-13-96</a>
+        </div>
+        <div class="contact-item">
+          🌐 Английский: <strong>B1–B2</strong> (технический)
+        </div>
+      </div>
+    </header>
+
+    <!-- Summary -->
+    <section>
+      <h2>О себе</h2>
+      <p class="summary-text">
+        Android-инженер с фундаментальным математическим бэкграундом (ПМИ КубГУ) и опытом проектирования многомодульных приложений на Kotlin и Jetpack Compose. Разрабатываю масштабируемые решения с Clean Architecture, кастомными KSP-процессорами и строгим управлением графом зависимостей (Dagger 2 / Hilt). Имею подтвержденный опыт командной разработки по Git Flow и проектирования сложных распределенных систем (mesh-сети, алгоритмы синхронизации CRDT, микросервисный бэкенд на Spring Boot). Ищу позицию Android-разработчика, где смогу решать практические продуктовые задачи.
+      </p>
+    </section>
+
+    <!-- Technical Skills -->
+    <section>
+      <h2>Технические навыки</h2>
+      <div class="skills-grid">
+        <div class="skill-category">Языки:</div>
+        <div class="skill-tags">
+          <span class="badge highlight">Kotlin</span>
+          <span class="badge">Java</span>
+          <span class="badge">SQL</span>
+        </div>
+
+        <div class="skill-category">Android & UI:</div>
+        <div class="skill-tags">
+          <span class="badge highlight">Jetpack Compose</span>
+          <span class="badge">Material Design 3</span>
+          <span class="badge">Navigation Compose</span>
+          <span class="badge">Coil</span>
+          <span class="badge">XML / View System</span>
+          <span class="badge">Custom Views</span>
+        </div>
+
+        <div class="skill-category">Архитектура:</div>
+        <div class="skill-tags">
+          <span class="badge highlight">Multi-Module Architecture</span>
+          <span class="badge highlight">Clean Architecture</span>
+          <span class="badge">MVI</span>
+          <span class="badge">MVVM</span>
+          <span class="badge">Repository Pattern</span>
+          <span class="badge">SOLID</span>
+        </div>
+
+        <div class="skill-category">Асинхронность & DI:</div>
+        <div class="skill-tags">
+          <span class="badge highlight">Kotlin Coroutines</span>
+          <span class="badge highlight">Flow / StateFlow</span>
+          <span class="badge">Channels</span>
+          <span class="badge highlight">Dagger 2 (Component Deps)</span>
+          <span class="badge">Hilt</span>
+          <span class="badge">KSP (кодогенерация)</span>
+        </div>
+
+        <div class="skill-category">Данные & Сеть:</div>
+        <div class="skill-tags">
+          <span class="badge">Ktor Client</span>
+          <span class="badge">Retrofit</span>
+          <span class="badge">Room</span>
+          <span class="badge">DataStore</span>
+          <span class="badge">Kotlin Serialization</span>
+          <span class="badge">CRDT & Vector Clocks</span>
+          <span class="badge">WebSocket / STOMP</span>
+        </div>
+
+        <div class="skill-category">Инфраструктура:</div>
+        <div class="skill-tags">
+          <span class="badge">Gradle Kotlin DSL</span>
+          <span class="badge">Git / GitHub Actions CI</span>
+          <span class="badge">Docker Compose</span>
+          <span class="badge">Spring Boot</span>
+          <span class="badge">Kafka</span>
+          <span class="badge">Redis</span>
+          <span class="badge">PostgreSQL</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience & Projects -->
+    <section>
+      <h2>Опыт разработки и проекты</h2>
+
+      <!-- Project 1: Market ERP -->
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-title">
+            <a href="https://github.com/de4ltt/market-mobile" target="_blank">ERP-система торговой сети «Market»</a>
+          </div>
+          <div class="project-period">2024 – 2025</div>
+        </div>
+        <div class="project-role">Android-разработчик · Командная разработка (7 человек)</div>
+        <p class="project-desc">
+          Корпоративное мобильное приложение для складского персонала и товароведов: автоматизация приемки товаров, адресного хранения, учета смен и инвентаризации.
+        </p>
+        <ul class="project-bullets">
+          <li><strong>С нуля спроектировал и реализовал архитектуру:</strong> 14 независимых Gradle-модулей, строгое разделение по слоям Clean Architecture (Data / Domain / Presentation) + MVVM.</li>
+          <li><strong>Бизнес-логика:</strong> разработал функционал адресного хранения (топология стеллажей, ячеек, матрица товаров) и модуль верификации накладных при приемке с фиксацией брака.</li>
+          <li><strong>Сетевой и локальный стек:</strong> настроил Ktor Client с перехватом 401 ошибки и автоматическим обновлением JWT-токенов, локальную БД на Room и DataStore для пользовательских сессий.</li>
+          <li><strong>Командные процессы:</strong> разработка велась по строгому Git Flow с созданием feature-веток, пул-реквестов и регулярным взаимным код-ревью с коллегами.</li>
+        </ul>
+        <div class="project-stack">
+          <span class="badge">Kotlin</span>
+          <span class="badge">Jetpack Compose</span>
+          <span class="badge">14 Gradle Modules</span>
+          <span class="badge">Clean Architecture</span>
+          <span class="badge">Hilt</span>
+          <span class="badge">Ktor Client</span>
+          <span class="badge">Room</span>
+          <span class="badge">Coroutines & Flow</span>
+        </div>
+      </div>
+
+      <!-- Project 2: Borshchevyk -->
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-title">
+            <a href="https://github.com/Borshchevyk/borshchevyk-android" target="_blank">«Borshchevyk» — оффлайн-мессенджер на mesh-сетях</a>
+          </div>
+          <div class="project-period">2025 – 2026</div>
+        </div>
+        <div class="project-role">Android-разработчик / Бэкенд-инженер · R&D и дипломный проект (2 человека)</div>
+        <p class="project-desc">
+          Защищенная система обмена сообщениями, способная функционировать в условиях полного отсутствия интернета с автоматической синхронизацией при появлении канала связи.
+        </p>
+        <ul class="project-bullets">
+          <li><strong>Децентрализованная сеть:</strong> реализовал передачу данных напрямую между устройствами через Google Nearby Connections (mesh-топология).</li>
+          <li><strong>Бесконфликтная синхронизация:</strong> спроектировал модуль дельта-синхронизации на базе <strong>CRDT и векторных часов</strong>, гарантирующий автоматическое детерминированное разрешение конфликтов сообщений.</li>
+          <li><strong>Архитектура клиента:</strong> 36 Gradle-модулей, фоновая синхронизация через WorkManager, локальная база Room, протокол STOMP через WebSocket.</li>
+          <li><strong>Микросервисный бэкенд:</strong> разработал распределенный бэкенд на Spring Boot из 8 сервисов (Auth, Chat, Sync, Media, Gateway), брокер сообщений Apache Kafka, Caddy и кэширование на Redis.</li>
+        </ul>
+        <div class="project-stack">
+          <span class="badge">Kotlin</span>
+          <span class="badge">36 Gradle Modules</span>
+          <span class="badge">CRDT & Vector Clocks</span>
+          <span class="badge">Google Nearby</span>
+          <span class="badge">Spring Boot</span>
+          <span class="badge">Kafka</span>
+          <span class="badge">Redis</span>
+          <span class="badge">PostgreSQL</span>
+          <span class="badge">Docker</span>
+        </div>
+      </div>
+
+      <!-- Project 3: AE:Health -->
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-title">
+            <a href="https://github.com/de4ltt/ae-health-mobile" target="_blank">«AE:Health» — сервис поиска медучреждений и врачей</a>
+          </div>
+          <div class="project-period">2025</div>
+        </div>
+        <div class="project-role">Full-stack & Android Developer · Индивидуальный проект</div>
+        <p class="project-desc">
+          Каталог клиник и аптек с фильтрацией, геопозиционированием (2GIS SDK), AI-ассистентом и полным CI/CD пайплайном.
+        </p>
+        <ul class="project-bullets">
+          <li><strong>Кастомная кодогенерация:</strong> написал собственный <strong>KSP-процессор (Kotlin Symbol Processing)</strong> для автогенерации мапперов между DTO и доменными моделями, устранив дублирование кода.</li>
+          <li><strong>Глубокая настройка DI:</strong> осознанно реализовал DI на <strong>Dagger 2 с Component Dependencies</strong> для полного контроля над временем жизни графа зависимостей и изоляции модулей.</li>
+          <li><strong>Автоматизация:</strong> настроил GitHub Actions для проверки сборки, линтинга и формирования релизного APK при каждом пуше в основную ветку.</li>
+        </ul>
+        <div class="project-stack">
+          <span class="badge">Kotlin</span>
+          <span class="badge">Jetpack Compose</span>
+          <span class="badge">KSP Processor</span>
+          <span class="badge">Dagger 2 Component Deps</span>
+          <span class="badge">GitHub Actions CI</span>
+          <span class="badge">Room</span>
+        </div>
+      </div>
+
+      <!-- Project 4: KubMarket & AE:Diary -->
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-title">
+            <a href="https://github.com/de4ltt/kub-market" target="_blank">«KubMarket» & «AE:Diary»</a>
+          </div>
+          <div class="project-period">2023 – 2024</div>
+        </div>
+        <div class="project-role">Android-разработчик · Практика КубГУ / Проект факультета</div>
+        <ul class="project-bullets">
+          <li><strong>KubMarket:</strong> мобильный маркетплейс с ролевой навигацией (покупатель, менеджер ПВЗ, администратор), реактивным обновлением данных через Flow и кэшированием в Room.</li>
+          <li><strong>AE:Diary:</strong> оффлайн-дневник для старост факультета (расписание, учет посещаемости, экспорт статистики). Реально использовался студентами, поддерживался и обновлялся по обратной связи.</li>
+        </ul>
+        <div class="project-stack">
+          <span class="badge">Kotlin</span>
+          <span class="badge">Jetpack Compose</span>
+          <span class="badge">Hilt</span>
+          <span class="badge">Room</span>
+          <span class="badge">Flow</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education -->
+    <section>
+      <h2>Образование</h2>
+      
+      <div class="edu-item">
+        <div>
+          <div class="edu-degree">Магистратура: Прикладная математика и информатика (01.04.02)</div>
+          <div class="edu-institution">Кубанский государственный университет (КубГУ)</div>
+        </div>
+        <div class="edu-period">2026 – 2028</div>
+      </div>
+
+      <div class="edu-item" style="margin-top: 8px;">
+        <div>
+          <div class="edu-degree">Бакалавриат: Прикладная математика и информатика (01.03.02)</div>
+          <div class="edu-institution">Кубанский государственный университет (КубГУ) · Диплом бакалавра</div>
+        </div>
+        <div class="edu-period">2022 – 2026</div>
+      </div>
+    </section>
+  </div>
+
+</body>
+</html>
