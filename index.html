@@ -501,25 +501,53 @@
         </div>
       </div>
 
-      <!-- Project 4: KubMarket & AE:Diary -->
+      <!-- Project 4: KubMarket -->
       <div class="project-card">
         <div class="project-header">
           <div class="project-title">
-            <a href="https://github.com/de4ltt/kub-market" target="_blank">«KubMarket» & «AE:Diary»</a>
+            <a href="https://github.com/de4ltt/kub-market" target="_blank">«KubMarket» — маркетплейс с ролевой моделью</a>
           </div>
-          <div class="project-period">2023 – 2024</div>
+          <div class="project-period">2024</div>
         </div>
-        <div class="project-role">Android-разработчик · Практика КубГУ / Pet-проект для факультета</div>
+        <div class="project-role">Android-разработчик · Летняя практика КубГУ (командный проект)</div>
         <ul class="project-bullets">
-          <li><strong>KubMarket:</strong> маркетплейс с ролевой навигацией на Jetpack Compose (покупатель, менеджер ПВЗ, администратор), кэширование каталога в Room, запросы через Ktor Client.</li>
-          <li><strong>AE:Diary:</strong> оффлайн-приложение для старост факультета (расписание, учет посещаемости, статистика). Реально использовалось старостами, дорабатывал и чинил баги по их отзывам.</li>
+          <li>Разработал клиентскую часть на Jetpack Compose с разделением интерфейса и прав под три роли: покупатель, менеджер ПВЗ и администратор.</li>
+          <li>Настроил сетевое взаимодействие через Ktor Client, кэширование каталога в Room и реактивное обновление UI через Coroutines и Flow.</li>
+          <li>Внедрил DI на Hilt, изолировал логику работы с данными через Repository Pattern.</li>
         </ul>
         <div class="project-stack">
           <span class="badge">Kotlin</span>
           <span class="badge">Jetpack Compose</span>
           <span class="badge">Hilt</span>
           <span class="badge">Room</span>
+          <span class="badge">Ktor Client</span>
           <span class="badge">Coroutines / Flow</span>
+        </div>
+      </div>
+
+      <!-- Project 5: AE:Diary -->
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-title">
+            <a href="https://github.com/de4ltt/ae-diary" target="_blank">«AE:Diary» — электронный дневник посещаемости</a>
+          </div>
+          <div class="project-period">2023 – 2024</div>
+        </div>
+        <div class="project-role">Android-разработчик · Проект для старост факультета</div>
+        <ul class="project-bullets">
+          <li>Оффлайн-приложение для ведения расписания, учета посещаемости занятий и формирования отчетов старостами групп.</li>
+          <li>Спроектировал модульную архитектуру (app / data / domain) с Clean Architecture и MVVM.</li>
+          <li>Реализовал локальную базу на Room, сохранение конфигураций через DataStore, навигацию на Compose Destinations.</li>
+          <li>Добавил светлую/темную тему и локализацию интерфейса. Приложение реально эксплуатировалось старостами на факультете, дорабатывалось по их фидбеку.</li>
+        </ul>
+        <div class="project-stack">
+          <span class="badge">Kotlin</span>
+          <span class="badge">Jetpack Compose</span>
+          <span class="badge">Multi-Module</span>
+          <span class="badge">Clean Architecture</span>
+          <span class="badge">Hilt</span>
+          <span class="badge">Room</span>
+          <span class="badge">DataStore</span>
         </div>
       </div>
     </section>
